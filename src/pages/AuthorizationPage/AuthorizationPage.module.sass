@@ -1,0 +1,46 @@
+@import '../../sass/mixin'
+
+.autoPage
+  overflow: hidden
+  width: 100%
+  height: 100vh
+  display: flex
+  &Main
+    background: linear-gradient(180deg, rgba(196, 196, 196, 0.3) 0%, rgba(196, 196, 196, 0.015) 100%)
+    width: 100%
+    border-radius: 0 width1920(30) width1920(30) 0
+    padding: width1920(30) width1920(100)
+    &Img
+      width: width1920(128)
+      img
+        width: 100%
+        height: auto
+    &Container
+      min-height: 100%
+      display: flex
+      align-items: center
+  &Decor
+    max-width: width1920(677)
+    width: 100%
+    display: flex
+    align-items: center
+    justify-content: center
+    &BoxImg
+      display: flex
+      align-items: center
+      justify-content: center
+      position: relative
+      margin: 0 width1920(20)
+      width: 100%
+      height: width1920(320)
+      &One
+        left: 0
+        top: 10%
+      &Two
+        z-index: 3
+      &Three
+        top: 0
+        right: 0
+      img
+        width: width1920(240)
+        position: absolute

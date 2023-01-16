@@ -1,0 +1,19 @@
+@import '../../sass/mixin'
+
+.modalError
+  display: flex
+  flex-direction: column
+  padding: width1920(50) width1920(40)
+  border-radius: width1920(20)
+  background-color: white
+  gap: width1920(20)
+  align-items: center
+  &Title
+    font-family: Museo-500,sans-serif
+    font-size: width1920(24)
+  &Content
+    font-size: width1920(18)
+  &Btn
+    @include buttonPurple
+    font-size: width1920(18)
+    padding: width1920(10) width1920(30)

@@ -1,0 +1,40 @@
+@import '../../sass/mixin'
+
+.authorization
+  height: 100%
+  display: flex
+  flex-direction: column
+  align-items: flex-start
+  &Title
+    font-family: Museo-700, sans-serif
+    font-size: width1920(36)
+  &Form
+    width: width1920(412)
+    margin-top: width1920(50)
+    display: flex
+    flex-direction: column
+    gap: width1920(20)
+    &Input
+      @include inputAuth
+    &Box
+      display: flex
+      width: 100%
+      align-items: center
+      justify-content: space-between
+      gap: width1920(20)
+      font-size: width1920(20)
+      button
+        width: 100%
+        font-size: width1920(20)
+        padding: width1920(17)
+        @include buttonPurple
+      span
+        cursor: pointer
+        width: 100%
+        color: $purple
+    &Reg
+      font-size: width1920(16)
+      a
+        color: $purple
+        font-family: Museo-500,sans-serif
+

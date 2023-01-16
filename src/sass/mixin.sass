@@ -1,0 +1,39 @@
+@use 'sass:math'
+@function width1920($n)
+  @return $n*math.div(100vw,1920)
+@function width1024($n)
+  @return $n*math.div(100vw,1024)
+@function width768($n)
+  @return $n*math.div(100vw,768)
+@function width460($n)
+  @return $n*math.div(100vw,460)
+
+//color app:
+$purple: #AF05FF
+
+//button purple
+@mixin buttonPurple()
+  cursor: pointer
+  text-transform: uppercase
+  font-family: Museo-700,sans-serif
+  outline: none
+  border: 1px solid $purple
+  background-color: $purple
+  border-radius: 200px
+  color: white
+  transition: all 0.2s linear
+  &:hover
+    color: $purple
+    background-color: transparent
+  &:active
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.34)
+    transform: scale(0.95)
+@mixin inputAuth
+  border: 1px solid rgba(47, 46, 65, 0.1)
+  border-radius: width1920(30)
+  padding: width1920(19) width1920(27)
+  background-color: inherit
+  &::placeholder
+    color: rgba(47, 46, 65, 0.4)
+
+

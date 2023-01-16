@@ -1,0 +1,63 @@
+@import '../../sass/mixin'
+.registration
+  display: flex
+  flex-direction: column
+  align-items: flex-start
+  width: width1920(400)
+  margin-left: width1920(117)
+  &Title
+    font-family: Museo-700,sans-serif
+    font-size: width1920(24)
+    color: #2F2E41
+  &Login
+    margin-top: width1920(6)
+    color: #2F2E41
+    a
+      color: $purple
+      font-family: Museo-700,sans-serif
+  &Form
+    display: flex
+    flex-direction: column
+    width: 100%
+    gap: width1920(20)
+    margin-top: width1920(30)
+    &Label
+      position: relative
+      display: flex
+      flex-direction: column
+      &Error
+        font-size: width1920(10)
+        position: absolute
+        bottom: width1920(-20)
+        left: 0
+        margin-left: width1920(10)
+        color: red
+    &Input
+     @include inputAuth
+    &Group
+      &Text
+        cursor: pointer
+        &::before
+          margin-right: width1920(8)
+          content: ''
+          display: inline-block
+          vertical-align: middle
+          width: width1920(20)
+          height: width1920(20)
+          background-image: url("../../icons/blank-check-box.png")
+          background-repeat: no-repeat
+          background-position: center center
+          background-size: width1920(20)
+      &CheckBox:checked~&Text::before
+        background-image: url("../../icons/done.png")
+      &CheckBox
+        position: absolute
+        clip: rect(1px 1px 1px 1px)
+        height: 1px
+        width: 1px
+    &Btn
+      @include buttonPurple
+      align-self: flex-start
+      padding: width1920(17) width1920(54)
+      line-height: width1920(25)
+      font-size: width1920(20)
