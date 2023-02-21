@@ -6,10 +6,13 @@ import Modal from "../../components/Modal/Modal";
 import ModalContent from "../../components/ModalContent/ModalContent";
 import {useSelector} from "react-redux";
 import {motion} from "framer-motion";
+import {useNavigate} from "react-router-dom";
 
 const RegPage = () => {
+    const navigate = useNavigate()
     const successRegText = 'Для окончания регистрации Вам на почту отправлено письмо с подтверждением вашего email адреса.'
     const {loading,error} =useSelector(state => state.formAuthorization)
+    const {user} = useSelector(state=>state.auth)
     const [modalStatus, setModalStatus] = useState(false)
     const [modalInfo, setModalInfo] = useState({
         title: '',
@@ -44,8 +47,11 @@ const RegPage = () => {
     },[loading,error])
 
     useEffect(()=>{
+        if(user){
+            navigate('/home')
+        }
         openModal()
-    },[openModal])
+    },[openModal,user, navigate])
     return (
         <div className={style.home}>
             <div className={style.homeDecor}>

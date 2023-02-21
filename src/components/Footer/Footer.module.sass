@@ -1,0 +1,37 @@
+@import '../../sass/mixin'
+
+.footer
+  gap: width1920(40) 0
+  padding: width1920(100) 0
+  width: width1920(1620)
+  margin: 0 auto
+  display: grid
+  grid-template-columns: 1fr 1fr 1fr
+  grid-template-rows: repeat(2, auto)
+  font-size: width1920(24)
+  &Logo
+    width: width1920(150)
+    img
+      width: 100%
+      height: auto
+  &Support
+    justify-self: end
+    gap: width1920(20)
+    display: flex
+    flex-direction: column
+    align-items: flex-end
+    h3
+      color: rgba(47, 46, 65, 0.5)
+      font-size: width1920(24)
+    &Social
+      display: flex
+      justify-content: center
+      align-items: center
+      gap: width1920(10)
+      &Icon
+        width: width1920(36)
+        height: width1920(36)
+        img
+          width: 100%
+          height: auto
+

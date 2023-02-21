@@ -2,12 +2,12 @@ import React, {useState} from 'react';
 import {Link} from "react-router-dom";
 import style from './Registration.module.sass';
 import {useDispatch, useSelector} from "react-redux";
-import {inputControl, authentication,} from "../../redux/reducers/formAuthorizationSlice";
+import {inputControl, register,} from "../../redux/reducers/formAuthorizationSlice";
 import {motion} from "framer-motion";
 
 const Registration = () => {
     const dispatch = useDispatch()
-    const {username,password,email, confirmation, permission} = useSelector(state => state.formAuthorization)
+    const {userName,password,email, confirmation, permission} = useSelector(state => state.formAuthorization)
     const [passwordValid, setPasswordValid] = useState({
         password: true,
         permission: true
@@ -28,11 +28,14 @@ const Registration = () => {
         setPasswordValid(prevState => ({...prevState, password: validPassword}))
         const checkPermission = password===confirmation;
         setPasswordValid(prevState => ({...prevState, permission: checkPermission}))
-        const formData = new FormData()
-        formData.append("username",username);
-        formData.append("password",password);
-        formData.append("email",email);
-        validPassword&&checkPermission&&dispatch(authentication({body:formData, optionsUrl: '/local/register'}))
+        const data = {
+            userName,
+            password,
+            email
+        };
+        localStorage.clear();
+        localStorage.login = JSON.stringify({email, password});
+        validPassword&&checkPermission&&dispatch(register({body:JSON.stringify(data)}))
     }
     return (
         <div className={style.registration}>
@@ -42,12 +45,12 @@ const Registration = () => {
                 onSubmit={submitForm}
                 className={style.registrationForm}>
                 <input
-                    value={username}
+                    value={userName}
                     onChange={handleChangeInput}
                     required
                     className={style.registrationFormInput}
                     type="text"
-                    name={'username'}
+                    name={'userName'}
                     placeholder={'ваше имя'}/>
                 <input
                     value={email}

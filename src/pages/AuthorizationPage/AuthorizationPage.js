@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import style from './AuthorizationPage.module.sass'
 import manOne from '../../images/cardMan.png'
 import manTwo from '../../images/cardMan2.png'
@@ -11,14 +11,12 @@ import Modal from "../../components/Modal/Modal";
 import {useSelector} from "react-redux";
 import ConfirmationEmailAndResetPassword from '../../components/ConfirmationEmailAndResetPassword/ConfirmationEmailAndResetPassword'
 import Preloader from "../../components/Preloader/Preloader";
-import {useNavigate} from "react-router-dom";
-import useQuery from "../../hooks/useQuery";
+import { useNavigate } from 'react-router-dom';
 
 const AuthorizationPage = () => {
-    //получение Query параметров
-    const query = useQuery()
-
-    const {loading, error, successEmail, user} =useSelector(state => state.formAuthorization)
+    const navigate = useNavigate()
+    // Отслежживание запроса из redux
+    const { user, statusLoad, error, statusConfirmAndPassword} = useSelector(state=>state.auth)
     //Статус модального окна
     const [modalStatus, setModalStatus] = useState(false);
     //Контент для передачи в модальное окно
@@ -34,43 +32,29 @@ const AuthorizationPage = () => {
         confirmation: {
             title: 'подтверждение почты',
             text: 'Введите свой Email который вы указали при регистрации, на него будет повторно отправлена ссылка для подтверждения',
-            link: '/send-email-confirmation'
+            link: 'new-confirm'
         },
         resetPass: {
             title: 'восстановление пароля',
             text: 'Введите свой Email который вы указали при регистрации, на него будет отправлена ссылка для сброса пароля',
-            link: '/forgot-password'
+            link: 'forgot-password'
         }
     }
-   const navigate = useNavigate()
-    const openModalAreRedirect = useCallback(()=>{
-        if(loading==='fulfilled'){
-            successEmail && navigate('/success-email')
-            user&& navigate('/home')
+    
+    useEffect(()=>{
+        if(user){
+            navigate('/home')
         }
-        if(query.has("successEmail")&&loading!=='fulfilled'){
+        if(statusLoad==='rejected'){
+            setModalInfo(prev=>({...prev, message: error, title: 'Ошибка'}));
             setModalStatus(true)
-            setModalInfo({
-                title: 'Поздравляем',
-                message: 'Ваш адрес электронной почты подтвержден',
-                link: ''
-            })
-        }
-        if(loading==='rejected'){
-            if(error==='Вы не подтвердили свой email'){
+            if(error==='Адрес электронной почты не подтвержден'){
                 setContentType('confirmation')
             }
-            setModalStatus(true)
-            setModalInfo({
-                title: 'Ошибка',
-                message: error,
-                link: ''
-            })
+        }else if(statusLoad ==='fulfilled'){
+            navigate('/home')
         }
-    },[query,navigate, successEmail, user,loading,error])
-    useEffect(()=>{
-        openModalAreRedirect()
-    },[openModalAreRedirect])
+    },[user, error, statusLoad, navigate,])
     return (
         <div className={style.autoPage}>
             <div className={style.autoPageMain}>
@@ -80,9 +64,13 @@ const AuthorizationPage = () => {
                 <div className={style.autoPageMainContainer}>
                     <AnimatePresence>
                         {contentType==='authorization'&&<Authorization setContentType={setContentType}/>}
-                        {(contentType==='confirmation'||contentType==='resetPass')&&<ConfirmationEmailAndResetPassword
+                        {(contentType==='confirmation'||contentType==='resetPass')&&
+                        <ConfirmationEmailAndResetPassword
                             setContentType = {setContentType}
-                            contentComponent={contentComponent[contentType]}/>}
+                            contentComponent={contentComponent[contentType]}
+                            setModalStatus={setModalStatus}
+                            setModalInfo={setModalInfo}
+                            />}
                     </AnimatePresence>
                 </div>
             </div>
@@ -105,7 +93,7 @@ const AuthorizationPage = () => {
                         className={style.autoPageDecorBoxImgThree} src={manTwo} alt="card man two"/>
                 </div>
             </div>
-            {loading==='pending'&&<Preloader/>}
+            {(statusLoad==='pending'||statusConfirmAndPassword==='pending')&&<Preloader/>}
             <Modal modalStatus={modalStatus}>
                 <ModalContent setModal={setModalStatus} content={modalInfo}/>
             </Modal>

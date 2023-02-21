@@ -1,0 +1,100 @@
+@import '../../sass/mixin'
+
+.homeFirst
+  &Container
+    position: relative
+    max-width: width1920(1620)
+    margin: width1920(120) auto 0
+    height: width1920(654)
+    display: flex
+    align-items: center
+    &Hello
+      display: flex
+      flex-direction: column
+      align-items: flex-start
+      gap: width1920(45)
+      h1
+        font-family: Museo-900,sans-serif
+        font-size: width1920(60)
+      p
+        font-size: width1920(24)
+        color: rgba(47, 46, 65, 0.5)
+      button
+        @include buttonPurple()
+        padding: width1920(42) width1920(47)
+        font-size: width1920(24)
+    &Img
+      position: absolute
+      top: 50%
+      right: -5%
+      transform: translate(0, -50%)
+      width: width1920(1050)
+      img
+        width: 100%
+        height: auto
+
+  &Main
+    padding-bottom: width1920(150)
+    max-width: width1920(790)
+    margin: 0 auto
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    &Img
+      width: width1920(30)
+      svg
+        width: 100%
+        height: auto
+    &Box
+      margin-top: width1920(150)
+      h2
+        font-family: Museo-900ital, sans-serif
+        font-size: width1920(48)
+      &Text
+        display: flex
+        flex-direction: column
+        gap: width1920(40)
+        margin-top: width1920(60)
+        p
+          font-size: width1920(24)
+          color: rgba(47, 46, 65, 0.5)
+  &White
+    &Black
+      border-radius: width1920(60)
+      background-color: #2F2E41
+      padding: width1920(210) 0 width1920(185)
+      display: flex
+      justify-content: center
+      align-items: center
+      &Container
+        position: relative
+        max-width: width1920(1200)
+        &Img
+          position: absolute
+          left: -10%
+          top: -220%
+          width: width1920(300)
+          img
+            width: 100%
+            height: auto
+        &Info
+          display: flex
+          flex-direction: column
+          align-items: center
+          gap: width1920(50)
+          h2
+            font-family: Museo-900, sans-serif
+            font-size: width1920(60)
+            color: white
+            text-align: width1920(80)
+          button
+            @include buttonPurple()
+            font-size: width1920(24)
+            padding: width1920(30)
+
+
+
+
+
+

@@ -1,0 +1,26 @@
+@import '../../sass/mixin'
+
+.header
+  background: linear-gradient(180deg, rgba(175, 5, 255, 0.17) 0%, rgba(217, 217, 217, 0) 100%)
+  display: flex
+  align-items: center
+  justify-content: space-between
+  padding: width1920(30) width1920(60)
+  &Logo
+    width: width1920(150)
+    img
+      width: 100%
+      height: auto
+  &Menu
+    display: flex
+    gap: width1920(20)
+    li
+      cursor: pointer
+  &Profile
+    display: flex
+    align-items: center
+    gap: width1920(40)
+    &Logout
+      cursor: pointer
+      text-transform: uppercase
+      font-family: Museo-700, sans-serif

@@ -3,6 +3,7 @@ import style from './ModalContent.module.sass'
 import PropTypes from 'prop-types'
 import {useDispatch} from "react-redux";
 import {clearForm} from "../../redux/reducers/formAuthorizationSlice";
+import {resetStatusLoad } from '../../redux/reducers/authSlice';
 import {useNavigate} from "react-router-dom";
 const ModalContent = ({content, setModal}) => {
     const navigate = useNavigate()
@@ -11,9 +12,10 @@ const ModalContent = ({content, setModal}) => {
     const closeModal = ()=>{
         setModal(false)
         if(link!==''){
-            navigate(link)
+            navigate(`${link}`)
         }
         dispatch(clearForm())
+        dispatch(resetStatusLoad())
     }
     return (
         <div className={style.modalError}>

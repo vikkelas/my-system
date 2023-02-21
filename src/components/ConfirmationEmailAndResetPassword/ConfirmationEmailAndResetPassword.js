@@ -1,18 +1,47 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {motion} from "framer-motion";
 import style from './ConfirmationEmailAndResetPassword.module.sass'
 import {useDispatch, useSelector} from "react-redux";
-import {authentication, inputControl} from "../../redux/reducers/formAuthorizationSlice";
-import PropTypes from "prop-types";
-const ConfirmationEmailAndResetPassword = ({contentComponent, setContentType}) => {
+import { inputControl} from "../../redux/reducers/formAuthorizationSlice";
+import {newConfirmArePassword} from "../../redux/reducers/authSlice"
+const ConfirmationEmailAndResetPassword = ({
+    contentComponent, 
+    setContentType,
+    setModalStatus,
+    setModalInfo
+    }) => {
     const {title, text, link} = contentComponent
     const dispatch = useDispatch()
     const {email} = useSelector(state => state.formAuthorization)
-    const submitMessage = (e)=>{
+    const {statusConfirmAndPassword, messageServer, error} = useSelector(state=>state.auth)
+   
+
+    const handleSubmit = (e) => {
         e.preventDefault()
-        const form = new FormData(e.target)
-        dispatch(authentication({body:form, optionsUrl:link}))
+        dispatch(newConfirmArePassword({
+            body: JSON.stringify({email}),
+            url: link
+        }))
     }
+
+    useEffect(()=>{
+        if(statusConfirmAndPassword==='fulfilled'){
+            setModalStatus(true)
+            setModalInfo({
+                title: 'Письмо отправлено',
+                message: messageServer,
+                link: '/',
+            })
+        }
+        if(statusConfirmAndPassword==='rejected'){
+            setModalStatus(true)
+            setModalInfo({
+                title: 'Ошибка',
+                message: error,
+                link: '',
+            })
+        }
+    }, [statusConfirmAndPassword,error, messageServer, setModalStatus,setModalInfo ])
     return (
         <motion.div
             initial={{x: -300}}
@@ -24,7 +53,7 @@ const ConfirmationEmailAndResetPassword = ({contentComponent, setContentType}) =
             <h1 className={style.confirmationTitle}>{title}</h1>
             <p className={style.confirmationText}>{text}</p>
             <form
-                onSubmit={submitMessage}
+                onSubmit={handleSubmit}
                 className={style.confirmationForm}>
                 <input
                     onChange={(e)=>{
@@ -37,7 +66,11 @@ const ConfirmationEmailAndResetPassword = ({contentComponent, setContentType}) =
                     name={'email'}
                     placeholder={'email при регистрации'}
                 />
-                <button className={style.confirmationFormBtn}>отправить</button>
+                <button 
+                    onClick={handleSubmit}
+                    className={style.confirmationFormBtn}>
+                        отправить
+                </button>
                 <span
                     className={style.confirmationFormBack}
                     onClick={()=>setContentType('authorization')}
@@ -46,8 +79,5 @@ const ConfirmationEmailAndResetPassword = ({contentComponent, setContentType}) =
         </motion.div>
     );
 };
-ConfirmationEmailAndResetPassword.propTypes = {
-    contentComponent: PropTypes.object,
-    setContentType: PropTypes.func
-}
+
 export default ConfirmationEmailAndResetPassword;

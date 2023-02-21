@@ -4,7 +4,7 @@ const ErrPage404 = () => {
 
     return (
         <div>
-            Error
+           Error 404 not found
         </div>
     );
 };

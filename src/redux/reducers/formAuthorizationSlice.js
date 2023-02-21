@@ -1,17 +1,21 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
-export const authentication = createAsyncThunk(
-    'formAuthorization/authentication',
-    async ({body,optionsUrl},{rejectWithValue})=>{
+export const register = createAsyncThunk(
+    'formAuthorization/register',
+    async ({body},{rejectWithValue})=>{
         try {
-            const response = await fetch(process.env.REACT_APP_SERVER_URL+`/api/auth${optionsUrl}`,{
+            const response = await fetch(process.env.REACT_APP_SERVER_URL+`/auth/register`,{
                 body,
                 method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             })
-            if(!response.ok){
-                return rejectWithValue(await response.json())
+            const data = await response.json();
+            if(!data.ok){
+                return rejectWithValue(data)
             }
-            return await response.json()
+            return data;
         }catch (error){
             return rejectWithValue(error.message)
         }
@@ -21,17 +25,14 @@ export const authentication = createAsyncThunk(
 const formAuthorizationSlice = createSlice({
     name: 'formAuthorization',
     initialState: {
-        user: null,
-        username: '',
+        userName: '',
         email: '',
         password: '',
         confirmation: '',
         identifier: '',
-        permission: false,
         loading: 'idle',
+        permission: false,
         error: null,
-        successEmail: false
-
     },
     reducers: {
         inputControl(state, action){
@@ -39,8 +40,7 @@ const formAuthorizationSlice = createSlice({
             state[name] = value;
         },
         clearForm(state){
-            state.user = null
-            state.username= ''
+            state.userName= ''
             state.email= ''
             state.password= ''
             state.confirmation= ''
@@ -48,53 +48,20 @@ const formAuthorizationSlice = createSlice({
             state.permission= false
             state.loading= 'idle'
             state.error= null
-            state.successEmail = false
         }
     },
     extraReducers: (builder)=>{
-        //запуск preloader на странице регистрации и авторизации
-        builder.addCase(authentication.pending, (state)=>{
+        builder.addCase(register.pending, (state)=>{
             state.error = null
             state.loading = 'pending'
         });
-        builder.addCase(authentication.fulfilled, (state,action)=>{
+        builder.addCase(register.fulfilled, (state)=>{
             state.loading = 'fulfilled';
-            //user будет в ответе при авторизации и при регистрации с различием с токкеном и без
-            if(action.payload.user){
-                state.user = action.payload.user
-            }
-            //токен придет в ответе на успешную авторизацию
-            if(action.payload.jwt){
-                sessionStorage.setItem('jwtMySystem',action.payload.jwt)
-            }
-            // обработка ответа на удачную отправку ссылки подтверждение почты или смены пароля
-            if(action.payload.sent||action.payload.ok){
-                state.successEmail = true
-            }
         });
-        builder.addCase(authentication.rejected, (state,action)=>{
-            state.loading = 'rejected'
-            let error = null;
-            if (action.payload.error){
-                error = action.payload.error.message}
-            //перевод ошибок и отправка их в модальное окно
-            switch (error){
-                case ('email must be a valid email'):
-                    state.error = 'Несуществующий email'
-                    break
-                case ('Email or Username are already taken'):
-                    state.error = 'Такой пользователь уже зарегистрирован'
-                    break
-                case ('Your account email is not confirmed'):
-                    state.error = 'Вы не подтвердили свой email'
-                    break
-                case ('Invalid identifier or password'):
-                    state.error = 'Некорректный логин или пароль'
-                    break
-                default:
-                    state.error = 'Непредвиденная ошибка'
-                    break
-           }
+        builder.addCase(register.rejected, (state,action)=>{
+            const {message} = action.payload;
+            state.loading = 'rejected';
+            state.error = message;
         });
     }
 })

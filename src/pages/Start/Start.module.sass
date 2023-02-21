@@ -1,0 +1,176 @@
+@import "../../sass/mixin"
+@mixin decorText()
+  position: absolute
+  font-family: Museo-700, sans-serif
+  color: rgba(0, 0, 0, 0.05)
+  animation-duration: 10s
+  animation-timing-function: ease-in-out
+  animation-iteration-count: infinite
+
+@keyframes leftGo
+  0%
+    right: 0
+  50%
+    right: 90%
+  100%
+    right: 0
+@keyframes rightGo
+  0%
+    left: 0
+  50%
+    left: 65%
+  100%
+    left: 0
+@keyframes topGo
+  0%
+    bottom: 0
+  50%
+    bottom: 65%
+  100%
+    bottom: 0
+
+
+.main
+  display: grid
+  min-height: 100vh
+  grid-template-columns: auto width1920(677)
+  overflow: hidden
+  &Info
+    position: relative
+    display: flex
+    justify-content: center
+    &Container
+      display: flex
+      flex-direction: column
+      align-items: flex-start
+      margin-top: width1920(246)
+      &Title
+        max-width: width1920(820)
+        border-radius: width1920(30)
+        background: linear-gradient(180deg, #F4F4F4 0%, rgba(244, 244, 244, 0.05) 100%)
+        padding: width1920(60) width1920(40)
+        h1
+          font-size: width1920(70)
+          text-transform: uppercase
+          font-family: Museo-700, sans-serif
+          color: #2F2E41
+        p
+          color: rgba(47, 46, 65, 0.5)
+          font-family: Museo-300,sans-serif
+          line-height: width1920(44)
+          font-size: width1920(24)
+          margin-top: width1920(48)
+      &Btn
+        @include buttonPurple()
+        text-transform: none
+        margin-top: width1920(17)
+        margin-left: width1920(30)
+        padding: width1920(30)
+        font-size: width1920(24)
+        font-family: Museo-500,sans-serif
+    &It
+      @include decorText()
+      font-size: width1920(146)
+      top: 0
+      right: 0
+      margin-top: width1920(84)
+      animation-name: leftGo
+
+    &Buh
+      @include decorText()
+      margin-bottom: width1920(100)
+      font-size: width1920(64)
+      bottom: 0
+      right: 0
+      transform: rotateZ(-90deg)
+      animation-name: topGo
+    &Your
+      @include decorText()
+      font-size: width1920(128)
+      bottom: 0
+      left: 0
+      animation-name: rightGo
+
+
+
+  &Girl
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    background: linear-gradient(180deg, rgba(196, 196, 196, 0.3) 0%, rgba(196, 196, 196, 0.015) 100%)
+    border-radius: width1920(20) 0 0 width1920(20)
+    &Header
+      font-size: width1920(24)
+      color: rgba(47, 46, 65, 0.49)
+      text-transform: uppercase
+      display: flex
+      justify-content: flex-end
+      align-items: center
+      padding: width1920(50) width1920(150)
+    &Content
+      min-width: 100%
+      display: flex
+      align-items: flex-end
+      justify-content: flex-end
+      position: relative
+      overflow: hidden
+      &Flour
+        margin-left: width1920(50)
+        width: width1920(291)
+        position: absolute
+        bottom: 0
+        left: 0
+        svg
+          width: 100%
+          height: auto
+      &Body
+        position: relative
+        min-width: width1920(321)
+        height: width1920(750)
+        &Hand
+          transform-origin: 100% 0
+          pointer-events: none
+          z-index: 6
+          position: absolute
+          width: width1920(225)
+          top: 20%
+          left: 0
+          svg
+            width: 100%
+            height: auto
+        &Torso
+          z-index: 10
+          width: width1920(222)
+          position: absolute
+          bottom: 0
+          right: 0
+          svg
+            width: 100%
+            height: auto
+        &Play
+          z-index: 4
+          cursor: pointer
+          position: relative
+          top: 13%
+          left: -15%
+          width: width1920(129)
+          height: width1920(129)
+          border-radius: width1920(129)
+          background-color: #AF05FF
+          &Polygon
+            position: absolute
+            top: 50%
+            left: 50%
+            transform: translate(-50%, -50%)
+            width: 0
+            height: 0
+            border-style: solid
+            border-width: width1920(20) 0  width1920(20) width1920(40)
+            border-color: transparent transparent transparent #ffffff
+
+
+
+
+
+
+

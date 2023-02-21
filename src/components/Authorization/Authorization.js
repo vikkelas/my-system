@@ -1,21 +1,26 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import style from './Authorization.module.sass'
-import {useDispatch, useSelector} from "react-redux";
-import {authentication, inputControl} from "../../redux/reducers/formAuthorizationSlice";
+import { useState } from 'react';
 import {motion} from "framer-motion";
+import { useDispatch } from 'react-redux';
+import { login } from '../../redux/reducers/authSlice';
 
 const Authorization = ({setContentType}) => {
-    const {password, login} = useSelector(state => state.formAuthorization)
-    const dispatch=useDispatch()
+    const dispatch = useDispatch();
+    // работа формы
+    const [inputValue, setInputValue]  = useState({
+        password: '', 
+        email: ''
+    })
     const handleChangeInput = (e)=>{
         const {name, value} = e.target;
-        dispatch(inputControl({name, value}));
+        setInputValue(prevent=>({...prevent, [name]:value}))
     }
+    // отправка формы из redux
     const submitForm = (e)=>{
         e.preventDefault()
-        const formData = new FormData(e.target)
-        dispatch(authentication({body: formData, optionsUrl: '/local'}))
+        dispatch(login({body: JSON.stringify(inputValue)}))
     }
     return (
         <motion.div
@@ -25,19 +30,21 @@ const Authorization = ({setContentType}) => {
             key={"AuthorizationPage"}
             className={style.authorization}>
             <h1 className={style.authorizationTitle}>войти</h1>
-            <form onSubmit={submitForm} className={style.authorizationForm}>
+            <form 
+                onSubmit={submitForm}
+                className={style.authorizationForm}>
                     <input
                         onChange={handleChangeInput}
-                        value={login}
+                        value={inputValue.email}
                         className={style.authorizationFormInput}
                         required
-                        name={'identifier'}
+                        name={'email'}
                         type="email"
                         placeholder={'email'}
                     />
                     <input
                         onChange={handleChangeInput}
-                        value={password}
+                        value={inputValue.password}
                         className={style.authorizationFormInput}
                         type={"password"}
                         placeholder={'пароль'}

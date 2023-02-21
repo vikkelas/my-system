@@ -1,0 +1,55 @@
+@import '../../sass/mixin'
+
+.bodyPage
+    min-height: 100vh
+.header
+    padding: width1920(20)
+
+.main
+    display: flex
+    align-items: center
+    justify-content: center
+    min-height: 80vh
+    position: relative
+    &Decor
+        padding: width1920(20)
+        position: absolute
+        right: 10%
+        top: 0
+        max-width: width1920(500)
+        img
+            width: 100%
+            height: auto
+
+    &Container
+        z-index: 10
+        display: flex
+        align-items: center
+        justify-content: center
+        flex-direction: column
+        max-width: 25%
+        background-color: #eee8f1
+        padding: width1920(20) width1920(30)
+        border-radius: width1920(20)
+        &Box
+            margin: 0 auto
+            display: flex
+            flex-direction: column
+            justify-content: center
+            align-items: center
+            h2
+                font-family: Museo-700,sans-serif
+                font-size: width1920(28)
+                text-align: center
+            p
+                text-align: center
+                margin-top: width1920(15)
+                font-size: width1920(16)
+                font-family: "Museo-500", serif    
+        button 
+            @include buttonPurple
+            margin-top: width1920(20)
+            border-radius: width1920(25)
+            padding: width1920(10) width1920(15)
+            font-size: width1920(18)
+            width: width1920(100)    
