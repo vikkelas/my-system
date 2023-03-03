@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom';
 
 const AuthorizationPage = () => {
     const navigate = useNavigate()
-    // Отслежживание запроса из redux
+    // Отслеживание запроса из redux
     const { user, statusLoad, error, statusConfirmAndPassword} = useSelector(state=>state.auth)
     //Статус модального окна
     const [modalStatus, setModalStatus] = useState(false);

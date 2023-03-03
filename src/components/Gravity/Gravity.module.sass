@@ -1,0 +1,62 @@
+@import '../../sass/mixin'
+
+.main
+  background-color: #FFF
+  &WhiteBox
+    position: relative
+    padding: width1920(286) 0 width1920(200)
+    &Left
+      display: flex
+      flex-direction: column
+      max-width: width1920(900)
+      gap: width1920(30)
+      margin-left: width1920(270)
+      &Text
+        display: flex
+        flex-direction: column
+        gap: width1920(30)
+        h1
+          color: #2F2E41
+          font-family: Museo-900, sans-serif
+          line-height: width1920(80)
+          font-size: width1920(60)
+        p
+          font-size: width1920(24)
+          line-height: width1920(38)
+          max-width: width1920(531)
+      &BtnBox
+        display: flex
+        flex-direction: column
+        gap: width1920(10)
+        &Element
+          cursor: pointer
+          text-transform: uppercase
+          font-family: Museo-500, sans-serif
+          color: #AF05FF
+          width: width1920(150)
+          height: width1920(60)
+          border: 2px solid #AF05FF
+          border-radius: 100px
+          display: flex
+          justify-content: center
+          align-items: center
+          &:hover
+            color: #FFFFFF
+            background-color: #AF05FF
+    &Girl
+      width: width1920(834)
+      position: absolute
+      bottom: width1920(-60)
+      right: width1920(329)
+      img
+        width: 100%
+        height: auto
+
+  &BlackBox
+    background-color: #2F2E41
+    border-radius: width1920(60)
+
+
+
+
+
