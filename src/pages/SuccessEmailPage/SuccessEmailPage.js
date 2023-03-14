@@ -11,10 +11,10 @@ const SuccessEmailPage = () => {
     const dispatch = useDispatch()
     useEffect(()=>{
         setTimeout(()=>{
-            if(!!localStorage.login)dispatch(login({body: localStorage.login}))
+            if(localStorage.login)dispatch(login({body: localStorage.login}))
             navigate('/authorization')
         },1500)
-        
+
     },[dispatch, navigate])
     if(statusLoad==='fulfilled'){
         return <Navigate to={'/home'} replace/>;
@@ -42,7 +42,7 @@ const SuccessEmailPage = () => {
             </div>
         </div>
         )
-    }   
+    }
 };
 
 export default SuccessEmailPage;

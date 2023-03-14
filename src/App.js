@@ -20,17 +20,24 @@ function App() {
   const dispatch = useDispatch();
   //запрос на проверку актуальности токена
   const checkToken = useCallback(async ()=>{
-      const resp = await fetch(process.env.REACT_APP_SERVER_URL+'/auth/check',{
-          method: "GET",
-          headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${user.token}`,
-              'Accept': 'application/json'
-          }
-      })
-      if(!resp.ok){
-          dispatch(logout())
-      }
+    try{
+        if(user){
+            const resp = await fetch(process.env.REACT_APP_SERVER_URL+'/auth/check',{
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user.token}`,
+                    'Accept': 'application/json'
+                }
+            })
+            if(!resp.ok){
+                dispatch(logout())
+            }
+        }
+    } catch(err){
+        dispatch(logout())
+    }
+      
   },[dispatch, user]);
 
   useEffect(()=>{
@@ -47,12 +54,12 @@ function App() {
             <Route path={'authorization'} element={<AuthorizationPage/>}/>
             <Route path={'success-email'} element={<SuccessEmailPage/>}/>
             <Route path={'error404'} element={<ErrPage404/>}/>
-            <Route path={'chat'} element={<Chat/>}/>
             <Route path={'expired-token'} element={<NotConfirmEmail/>}/>
             <Route path={'new-password'} element={<NewPassword/>}/>
             <Route element={<ProtectedRouter isAllowed={!!user}/>}>
                 <Route path='/home' element={<Layout/>}>
                     <Route index element={<Home/>}/>
+                    <Route path={'chat'} element={<Chat/>}/>
                 </Route>
             </Route>
         </Routes>
